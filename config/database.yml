@@ -71,6 +71,8 @@ test:
 #
 production:
   <<: *default
+  host: awseb-e-egu2iugpzq-stack-awsebrdsdatabase-k96y7hmxzwzc.cncnwwolrq14.us-east-1.rds.amazonaws.com
   database: btga_production
-  username: btga
-  password: <%= ENV["BTGA_DATABASE_PASSWORD"] %>
+  port: 5432
+  username: <%= ENV['DB_USERNAME'] %>
+  password: <%= ENV['DB_PASSWORD'] %>
