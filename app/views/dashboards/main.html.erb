@@ -1,3 +1,3 @@
-<% provide(:title, "#{@season.year} Season") %>
+<% provide(:title, "#{@season&.year} Season") %>
 
-<h1><%= @season.year %> Season</h1>
+<h1><%= @season&.year %> Season</h1>
