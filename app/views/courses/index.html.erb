@@ -6,7 +6,7 @@
     <%= link_to 'New Course', new_course_path, class: "px-8 text-white" %>
   </div>
   <div class="container flex overflow-x-auto">
-    <table class="shadow-lg bg-white grow">
+    <table class="shadow-lg bg-white grow text-xs medium:text-base">
       <thead>
         <tr class="bg-blue-950 text-white">
           <th class="text-left px-8 py-2">Course</th>
@@ -19,7 +19,7 @@
       </thead>
       <tbody>
         <% @courses.each do |course| %>
-          <tr>
+          <tr class="even:bg-gray-50 odd:bg-white">
             <td class="text-left px-8 py-2"><%= link_to course.name, course %></td>
             <td class="text-left px-8 py-2"><%= course.par %></td>
             <td class="text-left px-8 py-2"><%= course.yardage %></td>
