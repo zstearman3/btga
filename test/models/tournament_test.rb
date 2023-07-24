@@ -1,6 +1,6 @@
 require "test_helper"
 
-class SeasonTest < ActiveSupport::TestCase
+class TournamentTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
