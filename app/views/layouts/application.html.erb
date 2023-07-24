@@ -13,6 +13,9 @@
   <body>
     <%= render "shared/navbar" %>
     <main class="container mx-auto mt-14 px-5 flex">
+      <% flash.each do |message_type, message| %>
+        <div class="alert alert-<%= message_type %>"><%= message %></div>
+      <% end %>
       <%= yield %>
     </main>
   </body>

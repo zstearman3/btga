@@ -4,5 +4,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "dashboards#countdown"
 
+  resources :courses, except: :show 
+
   get '/dashboard', to: 'dashboards#main'
 end
