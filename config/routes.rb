@@ -3,4 +3,6 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "dashboards#countdown"
+
+  get '/dashboard', to: 'dashboards#main'
 end
