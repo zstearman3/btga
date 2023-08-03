@@ -2,30 +2,30 @@
 
 <div class="flex-col container">
   <div class="flex grow bg-blue-950">
-    <h3 class="text-white text-lg flex-1 px-8">BTGA Course List</h3>
-    <%= link_to 'New Course', new_course_path, class: "px-8 text-white" %>
+    <h3 class="text-white text-lg flex-1 px-2">BTGA Course List</h3>
+    <%= link_to 'New Course', new_course_path, class: "px-2 text-white" %>
   </div>
   <div class="container flex overflow-x-auto">
     <table class="shadow-lg bg-white grow text-xs lg:text-base">
       <thead>
         <tr class="bg-blue-950 text-white">
-          <th class="text-left px-8 py-2">Course</th>
-          <th class="text-left px-8 py-2">Par</th>
-          <th class="text-left px-8 py-2">Yardage</th>
-          <th class="text-left px-8 py-2">Difficulty</th>
-          <th class="text-left px-8 py-2">Rating</th>
-          <th class="text-left px-8 py-2">Actions</th>
+          <th class="text-left px-2 py-2">Course</th>
+          <th class="text-left px-2 py-2">Par</th>
+          <th class="text-left px-2 py-2">Yardage</th>
+          <th class="text-left px-2 py-2">Difficulty</th>
+          <th class="text-left px-2 py-2">Rating</th>
+          <th class="text-left px-2 py-2">Actions</th>
         </tr>
       </thead>
       <tbody>
         <% @courses.each do |course| %>
           <tr class="even:bg-gray-50 odd:bg-white">
-            <td class="text-left px-8 py-2"><%= link_to course.name, course %></td>
-            <td class="text-left px-8 py-2"><%= course.par %></td>
-            <td class="text-left px-8 py-2"><%= course.yardage %></td>
-            <td class="text-left px-8 py-2"><%= course.difficulty %></td>
-            <td class="text-left px-8 py-2"><%= course.star_rating %></td>
-            <td class="text-left px-8 py-2"><%= link_to 'Edit', edit_course_path(course) %> | 
+            <td class="text-left px-2 py-2"><%= link_to course.name, course %></td>
+            <td class="text-left px-2 py-2"><%= course.par %></td>
+            <td class="text-left px-2 py-2"><%= course.yardage %></td>
+            <td class="text-left px-2 py-2"><%= course.difficulty %></td>
+            <td class="text-left px-2 py-2"><%= course.star_rating %></td>
+            <td class="text-left px-2 py-2"><%= link_to 'Edit', edit_course_path(course) %> | 
                 <%= link_to 'Delete', course, data: { "turbo-method": :delete, "turbo_confirm": 'Are you sure?' } %>
             </td>
           </tr>

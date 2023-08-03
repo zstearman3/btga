@@ -4,5 +4,6 @@ class SeasonsController < ApplicationController
     @previous_season = Season.find_by(year: @season.year - 1)
     @next_season = Season.find_by(year: @season.year + 1)
     @events = @season.events
+    @admin = params[:admin]
   end
 end
