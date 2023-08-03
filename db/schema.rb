@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_03_153004) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_03_180247) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -22,6 +22,25 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_03_153004) do
     t.decimal "star_rating"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "events", force: :cascade do |t|
+    t.integer "season_order"
+    t.integer "rounds"
+    t.date "start_date"
+    t.date "end_date"
+    t.bigint "course_id", null: false
+    t.bigint "tournament_id", null: false
+    t.bigint "season_id", null: false
+    t.bigint "winner_id"
+    t.boolean "finalized"
+    t.boolean "match_play"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["course_id"], name: "index_events_on_course_id"
+    t.index ["season_id"], name: "index_events_on_season_id"
+    t.index ["tournament_id"], name: "index_events_on_tournament_id"
+    t.index ["winner_id"], name: "index_events_on_winner_id"
   end
 
   create_table "seasons", force: :cascade do |t|

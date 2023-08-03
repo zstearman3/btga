@@ -1,6 +1,5 @@
 class Course < ApplicationRecord
-  has_many :tournaments
-  
+  has_many :tournaments, dependent: :nullify
   validates :name, uniqueness: true, presence: true
 
   def self.difficulty_options

@@ -1,6 +1,6 @@
 class TournamentLevel < ApplicationRecord
-  has_many :tournaments
-  
+  has_many :tournaments, dependent: :nullify
+
   enum :name, [ :standard, :championship, :major, :playoff ]
 
   STANDARD_POINTS = 
@@ -70,5 +70,9 @@ class TournamentLevel < ApplicationRecord
     when "playoff"
       PLAYOFF_POINTS
     end
+  end
+
+  def abbreviation
+    name[0].upcase
   end
 end

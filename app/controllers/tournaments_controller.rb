@@ -13,7 +13,6 @@ class TournamentsController < ApplicationController
   
   def create
     @tournament = Tournament.new(tournament_params)
-    @tournament.society = Society.last
     if @tournament.save
       flash[:success] = "Tournament added!"
       redirect_to tournaments_path

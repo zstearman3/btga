@@ -4,7 +4,9 @@ Rails.application.routes.draw do
   # DASHBOARDS
   root "dashboards#countdown"
   get '/dashboard', to: 'dashboards#main'
+  get '/seasons/:year/schedule', to: 'seasons#schedule'
 
   resources :courses, except: :show 
-  resources :tournaments, except: :destroy 
+  resources :tournaments
+  resources :events
 end
