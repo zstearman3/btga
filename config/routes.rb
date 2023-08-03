@@ -1,10 +1,10 @@
 Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  # Defines the root path route ("/")
+  # DASHBOARDS
   root "dashboards#countdown"
+  get '/dashboard', to: 'dashboards#main'
 
   resources :courses, except: :show 
-
-  get '/dashboard', to: 'dashboards#main'
+  resources :tournaments, except: :destroy 
 end

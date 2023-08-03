@@ -1,0 +1,32 @@
+<% provide(:title, 'Tournaments') %>
+
+<div class="flex-col container">
+  <div class="flex grow bg-blue-950">
+    <h3 class="text-white text-lg flex-1 px-8">BTGA Tournaments</h3>
+    <%= link_to 'New Tournament', new_tournament_path, class: "px-8 text-white" %>
+  </div>
+  <div class="container flex overflow-x-auto">
+    <table class="shadow-lg bg-white grow text-xs medium:text-base">
+      <thead>
+        <tr class="bg-blue-950 text-white">
+          <th class="text-left px-8 py-2">Tournament</th>
+          <th class="text-left px-8 py-2">Course</th>
+          <th class="text-left px-8 py-2">Type</th>
+          <th class="text-left px-8 py-2">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @tournaments.each do |tournament| %>
+          <tr class="even:bg-gray-50 odd:bg-white">
+            <td class="text-left px-8 py-2"><%= link_to tournament.name, tournament %></td>
+            <td class="text-left px-8 py-2"><%= tournament.home_course %></td>
+            <td class="text-left px-8 py-2"><%= tournament.level %></td>
+            <td class="text-left px-8 py-2"><%= link_to 'Edit', edit_tournament_path(tournament) %> | 
+                <%= link_to 'Delete', tournament, data: { "turbo-method": :delete, "turbo_confirm": 'Are you sure?' } %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

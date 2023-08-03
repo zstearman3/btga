@@ -1,4 +1,6 @@
 class TournamentLevel < ApplicationRecord
+  has_many :tournaments
+  
   enum :name, [ :standard, :championship, :major, :playoff ]
 
   STANDARD_POINTS = 

@@ -1,4 +1,6 @@
 class Course < ApplicationRecord
+  has_many :tournaments
+  
   validates :name, uniqueness: true, presence: true
 
   def self.difficulty_options
