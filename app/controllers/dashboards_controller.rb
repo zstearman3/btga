@@ -6,5 +6,8 @@ class DashboardsController < ApplicationController
 
   def main
     @season = Season.current
+    @event = Event.current
+    @next_event = Event.next
+    @scores = @event.golfer_events.includes(:golfer_rounds).order(score: :asc)
   end
 end

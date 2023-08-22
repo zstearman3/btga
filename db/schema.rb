@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_03_180247) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_21_184056) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -41,6 +41,57 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_03_180247) do
     t.index ["season_id"], name: "index_events_on_season_id"
     t.index ["tournament_id"], name: "index_events_on_tournament_id"
     t.index ["winner_id"], name: "index_events_on_winner_id"
+  end
+
+  create_table "golfer_events", force: :cascade do |t|
+    t.boolean "completed", default: false
+    t.integer "finish"
+    t.integer "score"
+    t.integer "score_to_par"
+    t.integer "points"
+    t.bigint "golfer_season_id", null: false
+    t.bigint "event_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_golfer_events_on_event_id"
+    t.index ["golfer_season_id", "event_id"], name: "index_golfer_events_on_golfer_season_id_and_event_id", unique: true
+    t.index ["golfer_season_id"], name: "index_golfer_events_on_golfer_season_id"
+  end
+
+  create_table "golfer_rounds", force: :cascade do |t|
+    t.integer "event_order", null: false
+    t.integer "score"
+    t.integer "score_to_par"
+    t.bigint "golfer_event_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["golfer_event_id", "event_order"], name: "index_golfer_rounds_on_golfer_event_id_and_event_order", unique: true
+    t.index ["golfer_event_id"], name: "index_golfer_rounds_on_golfer_event_id"
+  end
+
+  create_table "golfer_seasons", force: :cascade do |t|
+    t.integer "events"
+    t.integer "wins"
+    t.integer "points"
+    t.integer "rank"
+    t.boolean "champion"
+    t.bigint "golfer_id", null: false
+    t.bigint "season_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["golfer_id", "season_id"], name: "index_golfer_seasons_on_golfer_id_and_season_id", unique: true
+    t.index ["golfer_id"], name: "index_golfer_seasons_on_golfer_id"
+    t.index ["season_id"], name: "index_golfer_seasons_on_season_id"
+  end
+
+  create_table "golfers", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "gamertag", null: false
+    t.decimal "handicap"
+    t.integer "victories"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_golfers_on_name"
   end
 
   create_table "seasons", force: :cascade do |t|
