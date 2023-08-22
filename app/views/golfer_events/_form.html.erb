@@ -1,0 +1,43 @@
+<%= form_for(@golfer_event) do |form| %>
+  <%= form.hidden_field :event_id, value: @golfer_event.event_id %>
+  
+  <% if @golfer_event.errors.any? %>
+    <div id="error-explanations">
+      <%= pluralize(@golfer_event.errors.count, "error") %> prohibited this event from being saved:
+      <ul>
+        <% @golfer_event.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="field">
+    <%= form.label "Tournament" %>
+    <%= form.text_field :tournament_name, readonly: true, class: 'form-field', value: @golfer_event.event.tournament.name %>
+  </div>
+  
+  <div class="field">
+    <%= form.label :golfer %>
+    <%= form.collection_select :golfer_season_id, @golfer_seasons, :id, :golfer_name, {}, {class: 'form-field', id: :golfer_event_golfer_season_id} %>
+  </div>
+  
+  <% for i in (1..@golfer_event.event.rounds) do %>
+    
+    <div class="field">
+      <%= form.label "Round #{i}" %>
+      <%= form.number_field :"round_#{i}_score", min: 18, max: 150, class: 'form-field', id: :"golfer_round_#{i}_score" %>
+    </div>
+    
+  <% end %>
+  
+  <div class="field">
+    <%= form.label :completed %>
+    <%= form.check_box :completed, checked: true, class: 'form-check', id: :golfer_event_completed %>
+  </div>
+  
+  <div class="submit">
+    <%= form.submit yield(:button_text), class: 'button submit-button' %>
+  </div>
+  
+<% end %>

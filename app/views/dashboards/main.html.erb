@@ -4,37 +4,32 @@
   <div class="event-container">
     <% if @event %>
       <div class="flex grow bg-blue-950">
-        <h3 class="text-white text-lg flex-1 px-2"><%= @event.tournament.name %></h3>
+        <h3 class="text-white text-lg flex-1 px-2"><%= @event.tournament.name %> Leaderboard</h3>
+        <% if @admin %>
+          <%= link_to 'Log Score', new_golfer_event_path(:event_id => @event.id), class: "px-2 text-white" %>
+        <% end %>
       </div>
       <div class="container flex overflow-x-auto">
         <table class="shadow-lg bg-white grow text-xs lg:text-base">
           <thead>
             <tr class="bg-blue-950 text-white">
-              <th class="text-left px-2 py-2">Date</th>
-              <th class="text-left px-2 py-2">Type</th>
-              <th class="text-left px-2 py-2">Event</th>
-              <th class="text-left px-2 py-2">Course</th>
-              <th class="text-left px-2 py-2">Rounds</th>
-              <th class="text-left px-2 py-2">Champion</th>
-              <% if @admin %>
-                <th class="text-left px-2 py-2">Actions</th>
+              <th class="text-left px-2 py-2">Pos</th>
+              <th class="text-left px-2 py-2">Golfer</th>
+              <% (1..@event.rounds).each do |i| %>
+                <th class="text-left px-2 py-2"><%= "R#{i}" %></th>
               <% end %>
+              <th class="text-left px-2 py-2">Total</th>
             </tr>
           </thead>
           <tbody>
-            <% @events.each do |event| %>
-              <tr class="<%= event.tournament_level.name %> even:bg-gray-100 odd:bg-white">
-                <td class="text-left px-2 py-2"><%= event.start_date.strftime('%m/%d/%Y') %></td>
-                <td class="text-left px-2 py-2"><%= event.tournament_level.abbreviation %></td>
-                <td class="text-left px-2 py-2"><%= link_to event.tournament.name, event, class: "block-link" %></td>
-                <td class="text-left px-2 py-2"><%= event.course.name %></td>
-                <td class="text-left px-2 py-2"><%= event.rounds %></td>
-                <td class="text-left px-2 py-2"></td>
-                <% if @admin %>
-                  <td class="text-left px-2 py-2"><%= link_to 'Edit', edit_event_path(event) %> | 
-                      <%= link_to 'Delete', event, data: { "turbo-method": :delete, "turbo_confirm": 'Are you sure?' } %>
-                  </td>
+            <% @scores.each do |score, i| %>
+              <tr class="even:bg-gray-100 odd:bg-white">
+                <td class="text-left px-2 py-2"><%= i %></td>
+                <td class="text-left px-2 py-2"><%= score.golfer.name %></td>
+                <% score.golfer_rounds.each do |round| %>
+                  <td class="text-left px-2 py-2"><%= round.score %></td>
                 <% end %>
+                <td class="text-left px-2 py-2"><%= score.score %></td>
               </tr>
             <% end %>
           </tbody>

@@ -9,4 +9,5 @@ Rails.application.routes.draw do
   resources :courses, except: :show 
   resources :tournaments
   resources :events
+  resources :golfer_events, only: [:new, :create]
 end

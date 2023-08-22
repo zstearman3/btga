@@ -1,5 +1,6 @@
 class Season < ApplicationRecord
   has_many :events, dependent: :destroy
+  has_many :golfer_seasons
   validates :year, presence: true, uniqueness: true, numericality: { only_integer: true }
   
   CURRENT_YEAR = 2023
