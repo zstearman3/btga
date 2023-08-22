@@ -1,7 +1,7 @@
 class GolferEvent < ApplicationRecord
   attr_accessor :round_1_score, :round_2_score, :round_3_score, :round_4_score
 
-  has_many :golfer_rounds
+  has_many :golfer_rounds, dependent: :destroy
   belongs_to :golfer_season
   belongs_to :event
   has_one :golfer, through: :golfer_season
