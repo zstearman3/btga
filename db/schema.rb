@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_21_184056) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_22_220158) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -53,6 +53,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_21_184056) do
     t.bigint "event_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "won_tibreaker", default: false
     t.index ["event_id"], name: "index_golfer_events_on_event_id"
     t.index ["golfer_season_id", "event_id"], name: "index_golfer_events_on_golfer_season_id_and_event_id", unique: true
     t.index ["golfer_season_id"], name: "index_golfer_events_on_golfer_season_id"

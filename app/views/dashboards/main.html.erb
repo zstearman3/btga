@@ -22,14 +22,14 @@
             </tr>
           </thead>
           <tbody>
-            <% @scores.each do |score, i| %>
+            <% @scores.each do |score| %>
               <tr class="even:bg-gray-100 odd:bg-white">
-                <td class="text-left px-2 py-2"><%= i %></td>
+                <td class="text-left px-2 py-2"><%= score.finish %></td>
                 <td class="text-left px-2 py-2"><%= score.golfer.name %></td>
                 <% score.golfer_rounds.each do |round| %>
                   <td class="text-left px-2 py-2"><%= round.score %></td>
                 <% end %>
-                <td class="text-left px-2 py-2"><%= score.score %></td>
+                <td class="text-left px-2 py-2"><%= score.formatted_score_to_par %></td>
               </tr>
             <% end %>
           </tbody>

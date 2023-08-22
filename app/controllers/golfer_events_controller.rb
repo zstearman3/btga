@@ -9,8 +9,9 @@ class GolferEventsController < ApplicationController
   
   def create
     @golfer_event = GolferEvent.new(event_params)
+    @event = Event.find(event_params[:event_id])
     if @golfer_event.completed
-      for i in 1..@golfer_event.event.rounds
+      for i in 1..@event.rounds
         new_round = GolferRound.new(golfer_event: @golfer_event)
         new_round.init_from_event(i, params[:golfer_event][:"round_#{i}_score"].to_i)
         if !new_round.save
@@ -22,6 +23,11 @@ class GolferEventsController < ApplicationController
       @golfer_event.score_to_par = @golfer_event.calculate_score_to_par
     end
     if @golfer_event.save
+      @event.golfer_events.each do |event|
+        event.finish = event.calculate_finish
+        event.save
+      end
+
       flash[:success] = "Scores logged!"
       redirect_to root_url
     else

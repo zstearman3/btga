@@ -19,7 +19,7 @@
   
   <div class="field">
     <%= form.label :golfer %>
-    <%= form.collection_select :golfer_season_id, @golfer_seasons, :id, :golfer_name, {}, {class: 'form-field', id: :golfer_event_golfer_season_id} %>
+    <%= form.collection_select :golfer_season_id, @golfer_seasons, :id, :gamertag, {}, {class: 'form-field', id: :golfer_event_golfer_season_id} %>
   </div>
   
   <% for i in (1..@golfer_event.event.rounds) do %>
@@ -34,6 +34,11 @@
   <div class="field">
     <%= form.label :completed %>
     <%= form.check_box :completed, checked: true, class: 'form-check', id: :golfer_event_completed %>
+  </div>
+
+  <div class="field">
+    <%= form.label :won_tiebreaker %>
+    <%= form.check_box :won_tiebreaker, checked: false, class: 'form-check', id: :golfer_event_won_tiebreaker %>
   </div>
   
   <div class="submit">

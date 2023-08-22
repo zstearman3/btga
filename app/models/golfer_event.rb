@@ -8,6 +8,24 @@ class GolferEvent < ApplicationRecord
   has_one :season, through: :event
   has_one :course, through: :event
 
+  TO_PAR_HASH = {
+
+  }
+
+    
+  def formatted_score_to_par
+    return "-" unless score_to_par
+
+    case
+    when score_to_par < 0
+      score_to_par.to_s
+    when score_to_par == 0
+      "E"
+    when score_to_par > 0
+      "+#{score_to_par.to_s}"
+    end
+  end
+
   def set_round_accessor_score(round)
     matching_round = golfer_rounds.find_by(event_order: round)
     if matching_round
@@ -30,5 +48,9 @@ class GolferEvent < ApplicationRecord
 
   def calculate_score_to_par
     score - (event.rounds * course.par)
+  end
+
+  def calculate_finish
+    GolferEvent.where(event: event).where("score < ?", score).count + 1
   end
 end

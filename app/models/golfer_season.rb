@@ -10,7 +10,7 @@ class GolferSeason < ApplicationRecord
     end
   end
 
-  def golfer_name
-    golfer.name
+  def gamertag
+    golfer.gamertag
   end
 end
