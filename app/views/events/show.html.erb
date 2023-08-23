@@ -1,0 +1,60 @@
+<% provide(:title, @event.tournament.name) %>
+
+<div class="flex-col container">
+  <div class="event-container">
+    <div class="flex grow bg-blue-950">
+      <h3 class="text-white text-lg flex-1 px-2"><%= @event.tournament.name %> Leaderboard</h3>
+      <%= link_to 'Full Schedule', "/seasons/#{@season.year}/schedule", class: "px-2 text-white"%>
+      <% if @admin && !@event.finalized %>
+        <%= link_to 'Log Score', new_golfer_event_path(:event_id => @event.id), class: "px-2 text-white" %>
+      <% end %>
+    </div>
+    <div class="container flex overflow-x-auto">
+      <table class="shadow-lg bg-white grow text-xs lg:text-base">
+        <thead>
+          <tr class="bg-blue-950 text-white">
+            <th class="text-left px-2 py-2">Pos</th>
+            <th class="text-left px-2 py-2">Golfer</th>
+            <% (1..@event.rounds).each do |i| %>
+              <th class="text-left px-2 py-2"><%= "R#{i}" %></th>
+            <% end %>
+            <th class="text-left px-2 py-2">Total</th>
+            <% if @event.finalized %>
+              <th class="text-left px-2 py-2">Points</th>
+            <% end %>
+            <% if @admin && !@event.finalized %>
+              <th class="text-left px-2 py-2">Actions</th>
+            <% end %>
+          </tr>
+        </thead>
+        <tbody>
+          <% @golfer_events.each do |golfer_event| %>
+            <tr class="even:bg-gray-100 odd:bg-white">
+              <td class="text-left px-2 py-2"><%= golfer_event.finish %></td>
+              <td class="text-left px-2 py-2"><%= golfer_event.golfer.name %></td>
+              <% golfer_event.golfer_rounds.each do |round| %>
+                <td class="text-left px-2 py-2"><%= round.score %></td>
+              <% end %>
+              <td class="text-left px-2 py-2"><%= golfer_event.formatted_score_to_par %></td>
+              <% if @event.finalized %>
+                <td class="text-left px-2 py-2"><%= golfer_event.points %></td>
+              <% end %>
+              <% if @admin && !@event.finalized %>
+                <td class="text-left px-2 py-2"><%= link_to 'Edit', edit_golfer_event_path(golfer_event) %> | 
+                    <%= link_to 'Delete', golfer_event, data: { "turbo-method": :delete, "turbo_confirm": 'Are you sure?' } %>
+                </td>
+              <% end %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <% if @admin %>
+      <% if @event.finalized %>
+        <%= link_to "Unfinalize", unfinalize_event_path(@event), data: { 'turbo-method' => :post } %>
+      <% else %>
+        <%= link_to "Finalize", finalize_event_path(@event), data: { 'turbo-method' => :post } %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

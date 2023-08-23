@@ -9,4 +9,8 @@ class Tournament < ApplicationRecord
   def level
     tournament_level&.name
   end
+
+  def points_matrix
+    tournament_level.points_matrix
+  end
 end

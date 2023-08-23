@@ -8,6 +8,10 @@ Rails.application.routes.draw do
 
   resources :courses, except: :show 
   resources :tournaments
-  resources :events
   resources :golfer_events, except: [:show]
+
+  resources :events do
+    post 'finalize', on: :member
+    post 'unfinalize', on: :member
+  end
 end

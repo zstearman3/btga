@@ -51,6 +51,33 @@ class GolferEvent < ApplicationRecord
   end
 
   def calculate_finish
-    GolferEvent.where(event: event).where("score < ?", score).count + 1
+    finish = GolferEvent.where(event: event).where("score < ?", score).count + 1
+    ties = GolferEvent.where(event: event, score: score, won_tiebreaker: true).where.not(golfer_season: golfer_season)
+    
+    return finish unless finish == 1 && ties.count > 0
+
+    won_tiebreaker ? 1 : 2
+  end
+
+  def calculate_points
+    return 0 unless finish
+
+    points_matrix = event.tournament.points_matrix
+
+    ties = GolferEvent.where(event: event, finish: finish).where.not(golfer_season: golfer_season).count
+    points = points_matrix[finish.to_s]
+
+    for i in 1..ties 
+      points += season_tournament.points_hash[(finish + i).to_s]
+    end
+    self.points = points / (ties + 1)
+  end
+
+  def update_finish
+    update(finish: calculate_finish)
+  end
+
+  def update_points
+    update(points: calculate_points)
   end
 end

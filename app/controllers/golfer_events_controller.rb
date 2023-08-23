@@ -94,6 +94,6 @@ class GolferEventsController < ApplicationController
 
   def event_params
     params.require(:golfer_event).permit(:completed, :finish, :score, :score_to_par,
-                   :points, :golfer_season_id, :event_id)
+                   :points, :golfer_season_id, :event_id, :won_tiebreaker)
   end
 end

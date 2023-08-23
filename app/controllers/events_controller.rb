@@ -1,13 +1,15 @@
 class EventsController < ApplicationController
-  before_action :select_event, only: [:show, :edit, :update, :destroy]
+  before_action :select_event, except: [:index, :new, :create]
   
   def index
     @events = Event.all
   end
   
-  # def show
-  #   @golfer_events = @event.golfer_events.includes(:golfer).order(:finish)  
-  # end
+  def show
+    @season = @event.season
+    @golfer_events = @event.golfer_events.includes(:golfer).order(:finish)
+    @admin = params[:admin]
+  end
     
   def new
     @event = Event.new
@@ -42,6 +44,16 @@ class EventsController < ApplicationController
     @event.destroy ? flash[:success] = "Event deleted!" : flash[:danger] = "There was a problem deleting the event!"
     redirect_to "/seasons/#{@event.season.year}/schedule"
   end
+
+  def finalize
+    @event.finalize ? flash[:success] = "Event finalized!": flash[:warning] = "Event not finalized!"
+    redirect_to event_path(@event, admin: true)
+  end
+  
+  def unfinalize
+    @event.unfinalize ? flash[:success] = "Event unfinalized!": flash[:warning] = "Error unfinalizing event!"
+    redirect_to event_path(@event, admin: true)
+  end
   
   # def match_play
   #   @round_one_matchups = @event.match_play_matchups.where(round: 1)
@@ -73,15 +85,6 @@ class EventsController < ApplicationController
   #   end
   # end
   
-  # def finalize
-  #   @event.finalize_event ? flash[:success] = "Event finalized!": flash[:warning] = "Event not finalized!"
-  #   redirect_to @event
-  # end
-  
-  # def unfinalize
-  #   @event.unfinalize_event ? flash[:success] = "Event unfinalized!": flash[:warning] = "Error unfinalizing event!"
-  #   redirect_to @event
-  # end
   
   private
   

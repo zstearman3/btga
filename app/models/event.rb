@@ -15,13 +15,33 @@ class Event < ApplicationRecord
   def time_until
     start_time = start_date.to_datetime
     difference = start_time - DateTime.now
-    hours = ((difference * 24) - (difference.floor * 24)).round
+    hours = ActionController::Base.helpers.pluralize(
+      ((difference * 24) - (difference.floor * 24)).round, "Hour"
+    )
 
     if difference.floor > 0
-      return "#{difference.floor} Days, #{hours} Hours"
+      return "#{difference.floor} Days, #{hours}"
     end
 
-    return "#{hours} Hours" 
+    return hours 
+  end
+
+  def finalize
+    golfer_events.includes(event: {tournament: :tournament_level}).each do |golfer_event|
+      return false unless golfer_event.completed
+
+      golfer_event.update_finish
+      golfer_event.update_points
+      golfer_event.save
+    end
+
+    update(finalized: true)
+  end
+
+  def unfinalize
+    golfer_events.update_all(points: 0)
+    
+    update(finalized: false)
   end
 
   def self.current
