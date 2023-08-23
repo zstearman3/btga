@@ -68,7 +68,7 @@ class GolferEvent < ApplicationRecord
     points = points_matrix[finish.to_s]
 
     for i in 1..ties 
-      points += season_tournament.points_hash[(finish + i).to_s]
+      points += points_matrix[(finish + i).to_s]
     end
     self.points = points / (ties + 1)
   end

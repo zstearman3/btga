@@ -30,7 +30,7 @@
             <td class="text-left px-2 py-2"><%= link_to event.tournament.name, event, class: "block-link" %></td>
             <td class="text-left px-2 py-2"><%= event.course.name %></td>
             <td class="text-left px-2 py-2"><%= event.rounds %></td>
-            <td class="text-left px-2 py-2"></td>
+            <td class="text-left px-2 py-2"><%= event.winner&.name %></td>
             <% if @admin %>
               <td class="text-left px-2 py-2"><%= link_to 'Edit', edit_event_path(event) %> | 
                   <%= link_to 'Delete', event, data: { "turbo-method": :delete, "turbo_confirm": 'Are you sure?' } %>

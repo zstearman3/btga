@@ -2,6 +2,7 @@ class Event < ApplicationRecord
   belongs_to :tournament
   belongs_to :season
   belongs_to :course
+  belongs_to :winner, class_name: "Golfer", foreign_key: "winner_id", optional: true
   has_one :tournament_level, through: :tournament
   has_many :golfer_events
   validates :season_order, numericality: { only_integer: true }
@@ -35,13 +36,15 @@ class Event < ApplicationRecord
       golfer_event.save
     end
 
-    update(finalized: true)
+    winner = golfer_events.find_by(finish: 1).golfer
+
+    update(finalized: true, winner_id: winner.id)
   end
 
   def unfinalize
     golfer_events.update_all(points: 0)
-    
-    update(finalized: false)
+
+    update(finalized: false, winner_id: nil)
   end
 
   def self.current
