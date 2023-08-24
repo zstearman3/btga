@@ -34,7 +34,7 @@ class EventsController < ApplicationController
   def update
     if @event.update(event_params)
       flash['success'] = "Event updated!"
-      redirect_to schedule(@event.season.year)
+      redirect_to "/seasons/#{@event.season.year}/schedule"
     else
       render 'edit'
     end
