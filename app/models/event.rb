@@ -39,12 +39,18 @@ class Event < ApplicationRecord
     winner = golfer_events.find_by(finish: 1).golfer
 
     update(finalized: true, winner_id: winner.id)
+
+    season.golfer_seasons.each(&:update_points)
+    season.golfer_seasons.each(&:update_rank)
   end
 
   def unfinalize
     golfer_events.update_all(points: 0)
 
     update(finalized: false, winner_id: nil)
+
+    season.golfer_seasons.each(&:update_points)
+    season.golfer_seasons.each(&:update_rank)
   end
 
   def self.current

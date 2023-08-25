@@ -5,6 +5,10 @@ class Season < ApplicationRecord
   
   CURRENT_YEAR = 2023
 
+  def completed_events
+    events.where(finalized: true).count
+  end
+
   def self.current
     find_or_create_by(year: CURRENT_YEAR)
   end
