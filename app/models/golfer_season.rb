@@ -6,7 +6,8 @@ class GolferSeason < ApplicationRecord
 
   def update_points
     points_array = golfer_events.where(completed: true).order(points: :desc).pluck(:points)
-    points_array.pop(scores_to_drop.to_i).compact!
+    points_array.first(scores_to_count).compact!
+    p points_array
     points_total = points_array.sum
 
     update!(points: points_total)
@@ -29,7 +30,7 @@ class GolferSeason < ApplicationRecord
 
   private
 
-  def scores_to_drop
-    (season.completed_events / 6.0).floor
+  def scores_to_count
+    season.completed_events - (season.completed_events / 6.0).floor
   end
 end
